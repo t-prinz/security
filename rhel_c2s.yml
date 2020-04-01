@@ -6,4 +6,4 @@
   tasks:
     - name: Run C2S role
       import_role:
-        name: RedHatOfficial.rhel7_c2s
+        name: redhatofficial.rhel7_c2s
