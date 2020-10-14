@@ -1,7 +1,7 @@
 ---
 - name: Check compliance against the U.S. Government Commercial Cloud Services (C2S) baseline
-  hosts: "{{ vm_fq_hostname | default('') }}"
-  become: true
+  hosts: "{{ target_host | default('NO_HOSTS')}}"
+  become: True
 
   tasks:
     - name: Run C2S role
