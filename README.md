@@ -2,9 +2,9 @@
 
 Helpful reference:  https://medium.com/@jackprice/ansible-openscap-for-compliance-automation-14200fe70663
 
-## cis_scan.yml
+### cis_scan.yml
 
-Uses the OpenSCAP scanner to generate a report and associated Ansible remediation script based on the CIS profile (these will be placed in the local directory oscap-reports)
+Uses the OpenSCAP scanner to generate a report and associated Ansible remediation playbook based on the CIS profile (these will be placed in the local directory oscap-reports)
 
 Example usage:
 
