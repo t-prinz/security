@@ -1,8 +1,7 @@
-# security
-Security examples
+# Examples showing the use of Ansible for security scanning and remediation
 
-Reference:  https://medium.com/@jackprice/ansible-openscap-for-compliance-automation-14200fe70663
+Helpful reference:  https://medium.com/@jackprice/ansible-openscap-for-compliance-automation-14200fe70663
 
-scan.yml - Uses the OpenSCAP scanner tool to generate a report based on a policy and profile
+cis_scan.yml - Uses the OpenSCAP scanner to generate a report and associated Ansible remediation script based on the CIS profile
 
 rhel_c2s.yml - Runs the C2S role from the RedHatOfficial galaxy namespace
