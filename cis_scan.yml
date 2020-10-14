@@ -1,0 +1,43 @@
+---
+- name: Perform CIS scan using OpenSCAP
+  hosts: "{{ target_host | default('NO_HOSTS')}}"
+  become: True
+  vars:
+    oscap_profile: xccdf_org.ssgproject.content_profile_cis
+    oscap_policy: ssg-rhel7-ds
+
+  tasks:
+    - name: Ensure OpenSCAP software is installed (install workbench if desired)
+      package:
+        name: "{{ item }}"
+      with_items:
+        - openscap-scanner
+        - scap-security-guide
+#        - scap-workbench
+
+    - name: Run OpenSCAP scan and generate report
+      command: oscap xccdf eval \
+        --profile {{ oscap_profile }} \
+        --results /tmp/oscap.xml \
+        --report /tmp/oscap-report.html \
+        --fetch-remote-resources \
+        /usr/share/xml/scap/ssg/content/{{ oscap_policy }}.xml
+      ignore_errors: True
+
+    - name: Generate Ansible remediation playbook from the report
+      command: oscap xccdf generate fix --fix-type ansible \
+        --profile {{ oscap_profile }} \
+        --output /tmp/ospp-remediations.yml \
+        /tmp/oscap.xml
+
+    - name: Download report
+      fetch:
+        src: /tmp/oscap-report.html
+        dest: ./oscap-reports/{{ inventory_hostname }}.html
+        flat: yes
+
+    - name: Download remediation playbook
+      fetch:
+        src: /tmp/ospp-remediations.yml
+        dest: ./oscap-reports/{{ inventory_hostname }}-remediation.yml
+        flat: yes
