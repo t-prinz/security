@@ -10,7 +10,7 @@ Example usage:
 
 `ansible-playbook -i my-inventory-file.yml cis_scan.yml -e "target_host=hosttoscan.example.com"`
 
-## rhel_c2s.yml
+### rhel_c2s.yml
 
 Runs the C2S role from the RedHatOfficial galaxy namespace
 
