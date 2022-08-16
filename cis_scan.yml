@@ -9,11 +9,12 @@
   tasks:
     - name: Ensure OpenSCAP software is installed (install workbench if desired)
       package:
-        name: "{{ item }}"
-      with_items:
-        - openscap-scanner
-        - scap-security-guide
-#        - scap-workbench
+        name: "{{ pkg_list }}"
+      vars:
+        pkg_list:
+          - openscap-scanner
+          - scap-security-guide
+#          - scap-workbench
 
     - name: Run OpenSCAP scan and generate report
       command: oscap xccdf eval \
