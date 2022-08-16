@@ -4,9 +4,17 @@
   become: True
   vars:
     oscap_profile: xccdf_org.ssgproject.content_profile_cis
-    oscap_policy: ssg-rhel7-ds
 
   tasks:
+    - name: Define policy
+      set_fact:
+        oscap_policy: "ssg-rhel{{ ansible_facts.distribution_major_version-ds }}"
+      when: ansible_facts.distribution is defined and ansible_facts.distribution == "RedHat" and ansible_facts.distribution_major_version is defined and ansible_facts.distribution_major_version != "6" and ansible_facts.distribution_major_version != "9"
+
+    - name: print
+      debug:
+        var: oscap_policy
+
     - name: Ensure OpenSCAP software is installed (install workbench if desired)
       package:
         name: "{{ pkg_list }}"
