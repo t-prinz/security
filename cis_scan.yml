@@ -1,6 +1,6 @@
 ---
 - name: Perform CIS scan using OpenSCAP
-  hosts: "{{ target_host | default('NO_HOSTS')}}"
+  hosts: "{{ hostlist | default('all') }}"
   become: True
   vars:
     oscap_profile: xccdf_org.ssgproject.content_profile_cis
