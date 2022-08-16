@@ -8,7 +8,7 @@
   tasks:
     - name: Define policy
       set_fact:
-        oscap_policy: "ssg-rhel{{ ansible_facts.distribution_major_version-ds }}"
+        oscap_policy: "ssg-rhel{{ ansible_facts.distribution_major_version}}-ds"
       when: ansible_facts.distribution is defined and ansible_facts.distribution == "RedHat" and ansible_facts.distribution_major_version is defined and ansible_facts.distribution_major_version != "6" and ansible_facts.distribution_major_version != "9"
 
     - name: print
