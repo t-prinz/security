@@ -1,22 +1,31 @@
 ---
+
+# To see the different profiles available, run the following on the target host
+#
+# RHEL 8:
+# oscap info /usr/share/xml/scap/ssg/content/ssg-rhel8-ds.xml
+#
+# RHEL 9:
+# oscap info /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml
+
 - name: Perform CIS scan using OpenSCAP
   hosts: "{{ hostlist | default('all') }}"
-  become: True
+  become: true
   vars:
     oscap_profile: xccdf_org.ssgproject.content_profile_cis
 
   tasks:
     - name: Define policy
-      set_fact:
+      ansible.builtin.set_fact:
         oscap_policy: "ssg-rhel{{ ansible_facts.distribution_major_version}}-ds"
-      when: ansible_facts.distribution is defined and ansible_facts.distribution == "RedHat" and ansible_facts.distribution_major_version is defined and ansible_facts.distribution_major_version != "6" and ansible_facts.distribution_major_version != "9"
+      when: ansible_facts.distribution is defined and ansible_facts.distribution == "RedHat" and ansible_facts.distribution_major_version is defined and ansible_facts.distribution_major_version != "6"
 
-    - name: print
-      debug:
-        var: oscap_policy
+    - name: Print policy
+      ansible.builtin.debug:
+        msg: "Scanning for profile {{ oscap_profile }} using policy {{ oscap_policy }} on host {{ inventory_hostname }}"
 
     - name: Ensure OpenSCAP software is installed (install workbench if desired)
-      package:
+      ansible.builtin.package:
         name: "{{ pkg_list }}"
       vars:
         pkg_list:
@@ -25,7 +34,7 @@
 #          - scap-workbench
 
     - name: Run OpenSCAP scan and generate report
-      command: oscap xccdf eval \
+      ansible.builtin.command: oscap xccdf eval \
         --profile {{ oscap_profile }} \
         --results /tmp/oscap.xml \
         --report /tmp/oscap-report.html \
@@ -34,19 +43,19 @@
       ignore_errors: True
 
     - name: Generate Ansible remediation playbook from the report
-      command: oscap xccdf generate fix --fix-type ansible \
+      ansible.builtin.command: oscap xccdf generate fix --fix-type ansible \
         --profile {{ oscap_profile }} \
         --output /tmp/ospp-remediations.yml \
         /tmp/oscap.xml
 
     - name: Download report
-      fetch:
+      ansible.builtin.fetch:
         src: /tmp/oscap-report.html
         dest: ./oscap-reports/{{ inventory_hostname }}.html
         flat: yes
 
     - name: Download remediation playbook
-      fetch:
+      ansible.builtin.fetch:
         src: /tmp/ospp-remediations.yml
         dest: ./oscap-reports/{{ inventory_hostname }}-remediation.yml
         flat: yes
