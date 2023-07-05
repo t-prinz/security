@@ -7,7 +7,7 @@ References:
 
 ## cis_scan.yml
 
-Uses the OpenSCAP scanner to generate a report and associated Ansible remediation playbook based on the CIS profile (these will be placed in the local directory oscap-reports)
+Uses the OpenSCAP scanner to generate a report and associated Ansible remediation playbook based on the CIS profile (these will be placed in the local directory oscap-reports).  Note that the scan will generate an error if a rule fails but the playbook ignores the errors and generates both the report and the remediation playbook.
 
 Example usage:
 
