@@ -2147,7 +2147,7 @@
   - unknown_strategy | bool
 
 - name: Disable the GNOME3 Login Restart and Shutdown Buttons
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dconf/db/distro.d/00-security-settings
     section: org/gnome/login-screen
     option: disable-restart-buttons
@@ -2264,7 +2264,7 @@
   - unknown_strategy | bool
 
 - name: Disable the GNOME3 Login User List
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dconf/db/distro.d/00-security-settings
     section: org/gnome/login-screen
     option: disable-user-list
@@ -2396,7 +2396,7 @@
   - unknown_strategy
 
 - name: Configure removal-action - default file
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dconf/db/local.d//00-security-settings
     section: org/gnome/settings-daemon/peripherals/smartcard
     option: removal-action
@@ -2427,7 +2427,7 @@
   - unknown_strategy
 
 - name: Configure removal-action - existing files
-  ini_file:
+  community.general.ini_file:
     dest: '{{ item.path }}'
     section: org/gnome/settings-daemon/peripherals/smartcard
     option: removal-action
@@ -2597,7 +2597,7 @@
   - unknown_strategy | bool
 
 - name: Disable GDM Automatic Login
-  ini_file:
+  community.general.ini_file:
     dest: /etc/gdm/custom.conf
     section: daemon
     option: AutomaticLoginEnable
@@ -2658,7 +2658,7 @@
   - unknown_strategy | bool
 
 - name: Disable GNOME3 Automounting - automount-open
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dconf/db/local.d/00-security-settings
     section: org/gnome/desktop/media-handling
     option: automount-open
@@ -2782,7 +2782,7 @@
   - unknown_strategy | bool
 
 - name: Disable GNOME3 Automounting - autorun-never
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dconf/db/local.d/00-security-settings
     section: org/gnome/desktop/media-handling
     option: autorun-never
@@ -2903,7 +2903,7 @@
   - unknown_strategy | bool
 
 - name: Set GNOME3 Screensaver Inactivity Timeout
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dconf/db/local.d/00-security-settings
     section: org/gnome/desktop/session
     option: idle-delay
@@ -2991,7 +2991,7 @@
   - unknown_strategy | bool
 
 - name: Set GNOME3 Screensaver Lock Delay After Activation Period
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dconf/db/local.d/00-security-settings
     section: org/gnome/desktop/screensaver
     option: lock-delay
@@ -3109,7 +3109,7 @@
   - unknown_strategy
 
 - name: Enable GNOME3 Screensaver Lock After Idle Period
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dconf/db/local.d/00-security-settings
     section: org/gnome/desktop/screensaver
     option: lock-enabled
@@ -3179,7 +3179,7 @@
   - unknown_strategy
 
 - name: Enable GNOME3 Screensaver Lock After Idle Period
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dconf/db/local.d/00-security-settings
     section: org/gnome/desktop/lockdown
     option: disable-lock-screen
@@ -3367,7 +3367,7 @@
   - unknown_strategy | bool
 
 - name: Implement Blank Screensaver
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dconf/db/local.d/00-security-settings
     section: org/gnome/desktop/screensaver
     option: picture-uri
@@ -3647,7 +3647,7 @@
   - unknown_strategy | bool
 
 - name: Disable Ctrl-Alt-Del Reboot Key Sequence in GNOME3
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dconf/db/local.d/00-security-settings
     section: org/gnome/settings-daemon/plugins/media-keys
     option: logout
@@ -4810,7 +4810,7 @@
   - no_reboot_needed | bool
 
 - name: Ensure GPG check is globally activated
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dnf/dnf.conf
     section: main
     option: gpgcheck
@@ -4889,7 +4889,7 @@
         dirname ~ "/" ~ pkg.stat.lnk_target }}'
     when: pkg.stat.lnk_target is defined
   - name: Ensure GPG check Enabled for Local Packages (dnf)
-    ini_file:
+    community.general.ini_file:
       dest: '{{ pkg_config_file_symlink |  default("/etc/dnf/dnf.conf") }}'
       section: main
       option: localpkg_gpgcheck
@@ -4963,7 +4963,7 @@
   - no_reboot_needed | bool
 
 - name: Set gpgcheck=1 for each dnf repo
-  ini_file:
+  community.general.ini_file:
     path: '{{ item[0] }}'
     section: '{{ item[1] }}'
     option: gpgcheck
@@ -5341,7 +5341,7 @@
   - unknown_strategy | bool
 
 - name: Enable GNOME3 Login Warning Banner
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dconf/db/distro.d/00-security-settings
     section: org/gnome/login-screen
     option: banner-message-enable
@@ -13347,7 +13347,7 @@
   - restrict_strategy
 
 - name: Set 'StopIdleSessionSec' to '{{ var_logind_session_timeout }}' in the [Login] section of '/etc/systemd/logind.conf'
-  ini_file:
+  community.general.ini_file:
     path: /etc/systemd/logind.conf
     section: Login
     option: StopIdleSessionSec
@@ -40597,7 +40597,7 @@
   - no_reboot_needed | bool
 
 - name: Set 'dns' to '{{ var_networkmanager_dns_mode }}' in the [main] section of '/etc/NetworkManager/NetworkManager.conf'
-  ini_file:
+  community.general.ini_file:
     path: /etc/NetworkManager/NetworkManager.conf
     section: main
     option: dns
@@ -54064,7 +54064,7 @@
   - sssd_certificate_verification | bool
 
 - name: Ensure that "certificate_verification" is not set in /etc/sssd/sssd.conf
-  ini_file:
+  community.general.ini_file:
     path: /etc/sssd/sssd.conf
     section: sssd
     option: certificate_verification
@@ -54091,7 +54091,7 @@
   - sssd_certificate_verification
 
 - name: Ensure that "certificate_verification" is not set in  /etc/sssd/conf.d/*.conf
-  ini_file:
+  community.general.ini_file:
     path: /etc/sssd/conf.d/*.conf
     section: sssd
     option: certificate_verification
@@ -54118,7 +54118,7 @@
   - sssd_certificate_verification
 
 - name: Ensure that "certificate_verification" is set
-  ini_file:
+  community.general.ini_file:
     path: /etc/sssd/conf.d/certificate_verification.conf
     section: sssd
     option: certificate_verification
@@ -54197,7 +54197,7 @@
   - sssd_enable_smartcards
 
 - name: Add default domain group (if no domain there)
-  ini_file:
+  community.general.ini_file:
     path: /etc/sssd/sssd.conf
     section: '{{ item.section }}'
     option: '{{ item.option }}'
@@ -54236,7 +54236,7 @@
   - sssd_enable_smartcards
 
 - name: Enable Smartcards in SSSD
-  ini_file:
+  community.general.ini_file:
     dest: /etc/sssd/sssd.conf
     section: pam
     option: pam_cert_auth
@@ -54557,7 +54557,7 @@
   - sssd_offline_cred_expiration
 
 - name: Add default domain group (if no domain there)
-  ini_file:
+  community.general.ini_file:
     path: /etc/sssd/sssd.conf
     section: '{{ item.section }}'
     option: '{{ item.option }}'
@@ -54596,7 +54596,7 @@
   - sssd_offline_cred_expiration
 
 - name: Configure SSD to Expire Offline Credentials
-  ini_file:
+  community.general.ini_file:
     dest: /etc/sssd/sssd.conf
     section: pam
     option: offline_credentials_expiration
