@@ -17,5 +17,5 @@
   tasks:
     - name: Run DISA STIG role for RHEL 9
       import_role:
-        name: 
+        name: RedHatOfficial.rhel9_stig
       when: ansible_facts.distribution is defined and ansible_facts.distribution == "RedHat" and ansible_facts.distribution_major_version is defined and ansible_facts.distribution_major_version == "9"
