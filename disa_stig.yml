@@ -1,0 +1,21 @@
+---
+
+# To see the different profiles available, run the following on the target host
+#
+# RHEL 8:
+# oscap info /usr/share/xml/scap/ssg/content/ssg-rhel8-ds.xml
+#
+# RHEL 9:
+# oscap info /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml
+
+- name: Configure a system according to DISA STIG
+  hosts: "{{ hostlist | default('all') }}"
+  become: true
+  vars:
+    oscap_profile: xccdf_org.ssgproject.content_profile_cis
+
+  tasks:
+    - name: Run DISA STIG role for RHEL 9
+      import_role:
+        name: 
+      when: ansible_facts.distribution is defined and ansible_facts.distribution == "RedHat" and ansible_facts.distribution_major_version is defined and ansible_facts.distribution_major_version == "9"

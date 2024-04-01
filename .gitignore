@@ -1,1 +1,4 @@
 oscap-reports/
+
+roles/*
+!roles/requirements.yml
